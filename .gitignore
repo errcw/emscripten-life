@@ -1,0 +1,12 @@
+*.swp
+*.a
+
+vendor/
+life_test
+
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+CMakeFiles/
+Testing/

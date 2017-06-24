@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Life</title>
+  <script src="life_js_bindings.js"></script>
+  <script src="life.js"></script>
+  <style type="text/css">
+    #canvas {
+      margin: 10px;
+      border: 1px solid #eee;
+      box-shadow: 1px 1px 1px #aaa;
+    }
+  </style>
+</head>
+<body>
+  <canvas
+    id="canvas"
+    onmousedown="canvasMouseDown(event)"
+    onmousemove="canvasMouseMove(event)">
+  </canvas>
+</body>
+</html>
