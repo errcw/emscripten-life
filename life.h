@@ -12,6 +12,10 @@ struct Cell {
   // TODO(eworoshow): Templatize the numeric type.
   long x;
   long y;
+
+  bool operator==(const Cell& other) const {
+    return x == other.x && y == other.y;
+  }
 };
 
 class Life {
