@@ -1,9 +1,35 @@
-function interact() {
-  var t = new Module.Life();
-  var v = t.get();
-  var v0 = v.get(0);
-  t.delete();
+const life = (function() {
+  let state;
 
-  var vv = Module.parseCellList("(1, 1)");
-  var vv0 = vv.get(0);
-}
+  return {
+    onTemplateChanged: function() {
+      const templates = {
+        "": "(0, 0)",
+        "Glider": "(1, 1)\n(2, 2)",
+      };
+
+      const tmpl = $("#template-in option:selected").text();
+      $("#cells-in").val(templates[tmpl]);
+    },
+
+    onStartClicked: function() {
+      // TODO(eworoshow): Use the cells.
+      const cells = Module.parseCellList($("#cells-in").val());
+      console.log(cells.size());
+      state = new Module.Life();
+
+      const fadeMs = 150;
+      $("#start-panel").fadeOut(fadeMs, function() {
+        $("#life-panel").fadeIn(fadeMs);
+      });
+    },
+
+    gridMouseDown: function(evt) {
+      // TODO(eworoshow): Implement.
+    },
+
+    gridMouseMove: function(evt) {
+      // TODO(eworoshow): Implement.
+    },
+  };
+}());

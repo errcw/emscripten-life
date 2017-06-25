@@ -2,21 +2,42 @@
 <html>
 <head>
   <title>Life</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="life.css" />
+
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
   <script src="life_js_bindings.js"></script>
   <script src="life.js"></script>
-  <style type="text/css">
-    #canvas {
-      margin: 10px;
-      border: 1px solid #eee;
-      box-shadow: 1px 1px 1px #aaa;
-    }
-  </style>
 </head>
 <body>
-  <canvas
-    id="canvas"
-    onmousedown="canvasMouseDown(event)"
-    onmousemove="canvasMouseMove(event)">
-  </canvas>
+  <div id="start-panel">
+    <h1>Life</h1>
+
+    <label for="cells-in">Initial state as (x,y), one per line<label>
+    <textarea id="cells-in">(0, 0)</textarea>
+
+    <label for="template-in">Templates</label>
+    <select id="template-in" onchange="life.onTemplateChanged()">
+      <option><!--Default empty option--></option>
+      <option>Glider</option>
+    <select>
+
+    <button id="start" onclick="life.onStartClicked()">Let there be life!</button>
+  </div>
+
+  <div id="life-panel">
+    <canvas
+      id="grid"
+      onmousedown="life.gridMouseDown(event)"
+      onmousemove="life.gridMouseMove(event)">
+    </canvas>
+
+    <!--
+    TODO(eworoshow): coords, zoom, step/run
+    -->
+  </div>
 </body>
 </html>
