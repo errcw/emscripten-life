@@ -2,6 +2,7 @@
 #define LIFE_H
 
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <unordered_set>

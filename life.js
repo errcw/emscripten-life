@@ -15,7 +15,6 @@ const life = (function() {
     },
 
     onStartClicked: function() {
-
       const cells = Module.parseCellList($("#cells-in").val());
       for (let i = 0; i < cells.size(); i++) {
         const cell = cells.get(i);
