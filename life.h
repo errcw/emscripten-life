@@ -1,10 +1,11 @@
 #ifndef LIFE_H
 #define LIFE_H
 
-#include <string>
-#include <sstream>
-#include <vector>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <unordered_set>
+#include <vector>
 
 struct Cell {
   // NB: Should be int64_t but Javascript has no native support for 64-bit integers and so
@@ -13,8 +14,27 @@ struct Cell {
   long x;
   long y;
 
-  bool operator==(const Cell& other) const {
-    return x == other.x && y == other.y;
+  int liveNeighbors;
+
+  Cell() : x(0), y(0), liveNeighbors(0) {}
+  Cell(long x, long y) : x(x), y(y), liveNeighbors(0) {}
+};
+
+bool operator==(const Cell& lhs, const Cell& rhs);
+std::ostream& operator<<(std::ostream& stream, Cell const& cell);
+
+struct CellHash {
+  std::size_t operator() (std::shared_ptr<Cell> const &c) const {
+    size_t h = 17;
+    h = h * 31 + std::hash<long>()(c->x);
+    h = h * 31 + std::hash<long>()(c->y);
+    return h;
+  }
+};
+
+struct CellCompare {
+  size_t operator() (std::shared_ptr<Cell> const &lhs, std::shared_ptr<Cell> const &rhs) const {
+    return *lhs == *rhs;
   }
 };
 
@@ -22,8 +42,35 @@ class Life {
 public:
   Life() {}
 
-  // TODO(eworoshow): Consider real options for returning data to JS.
-  const std::vector<Cell> get() const;
+  // Triggers a cell to be added at the specified location.
+  void addAt(long x, long y);
+
+  // Increments the simulation one step.
+  void step();
+
+  // Returns a copy of the cells currently alive.
+  const std::vector<Cell> getAlive() const;
+
+private:
+  void updateNeighborCount(std::shared_ptr<Cell> cell, int delta);
+
+  std::unordered_set<std::shared_ptr<Cell>, CellHash, CellCompare> all;
+
+  std::unordered_set<std::shared_ptr<Cell>, CellHash, CellCompare> alive;
+  std::unordered_set<std::shared_ptr<Cell>, CellHash, CellCompare> toRemove;
+  std::unordered_set<std::shared_ptr<Cell>, CellHash, CellCompare> toAdd;
+  std::unordered_set<std::shared_ptr<Cell>, CellHash, CellCompare> toCheck;
+
+  const std::vector<std::pair<int, int>> directions = {
+    {0, 1},
+    {1, 1},
+    {1, 0},
+    {1, -1},
+    {0, -1},
+    {-1, -1},
+    {-1, 0},
+    {-1, 1},
+  };
 };
 
 // Parses a newline-delimited set of (x, y) cells. Invalid input is skipped.

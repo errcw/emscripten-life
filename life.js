@@ -1,5 +1,5 @@
 const life = (function() {
-  let state;
+  const state = new Module.Life();
 
   return {
     onTemplateChanged: function() {
@@ -13,10 +13,13 @@ const life = (function() {
     },
 
     onStartClicked: function() {
-      // TODO(eworoshow): Use the cells.
+
       const cells = Module.parseCellList($("#cells-in").val());
-      console.log(cells.size());
-      state = new Module.Life();
+      for (let i = 0; i < cells.size(); i++) {
+        const cell = cells.get(i);
+        console.log("Adding at " + cell);
+        state.addAt(cell[0], cell[1]);
+      }
 
       const fadeMs = 150;
       $("#start-panel").fadeOut(fadeMs, function() {

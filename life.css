@@ -20,10 +20,10 @@ body {
   display: block;
   width: 100%;
   margin-bottom: 2em;
+  font-size: 1em;
 }
 
 #start {
-  font-family: "Roboto", sans-serif;
   font-size: 1em;
 }
 

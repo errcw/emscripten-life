@@ -10,7 +10,9 @@ EMSCRIPTEN_BINDINGS(Life) {
 
   emscripten::class_<Life>("Life")
     .constructor<>()
-    .function("get", &Life::get);
+    .function("addAt", &Life::addAt)
+    .function("step", &Life::step)
+    .function("getAlive", &Life::getAlive);
 
   emscripten::function("parseCellList", &parseCellList);
 }
