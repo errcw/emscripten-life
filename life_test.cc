@@ -83,6 +83,21 @@ TEST(Step, TranslatePattern) {
   }
 }
 
+TEST(Step, DisappearingPattern) {
+  Life life;
+  life.addAt(6, 2);
+  life.addAt(0, 1);
+  life.addAt(1, 1);
+  life.addAt(1, 0);
+  life.addAt(5, 0);
+  life.addAt(6, 0);
+  life.addAt(7, 0);
+  for (int i = 0; i <= 130; i++) { // Diehard lives for 130 generations.
+    life.step();
+  }
+  EXPECT_TRUE(life.getAlive().empty());
+}
+
 TEST(Step, NumericLimits) {
   long min = std::numeric_limits<long>::min();
   long max = std::numeric_limits<long>::max();
