@@ -4,8 +4,10 @@ const life = (function() {
   return {
     onTemplateChanged: function() {
       const templates = {
-        "": "(0, 0)",
-        "Glider": "(1, 1)\n(2, 2)",
+        "": "",
+        "Glider": "(0, 2)\n(1, 1)\n(2, 1)\n(0, 0)\n(1, 0)",
+        "Static Box": "(0, 0)\n(1, 0)\n(0, 1)\n(1, 1)",
+        "Blinker": "(1, 2)\n(1, 1)\n(1, 0)",
       };
 
       const tmpl = $("#template-in option:selected").text();
@@ -20,6 +22,16 @@ const life = (function() {
         console.log("Adding at " + cell);
         state.addAt(cell[0], cell[1]);
       }
+      cells.delete();
+
+      for (let i = 0; i < 100; i++) {
+        state.step();
+      }
+      const alive = state.getAlive();
+      for (let i = 0; i < alive.size(); i++) {
+        console.log("Alive at " + alive.get(i));
+      }
+      alive.delete();
 
       const fadeMs = 150;
       $("#start-panel").fadeOut(fadeMs, function() {
