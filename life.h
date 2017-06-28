@@ -8,10 +8,12 @@
 #include <unordered_set>
 #include <vector>
 
+// NB: Should be int64_t but Javascript has no native support for 64-bit integers and so
+// Emscripten/Embind correspondingly has no Javascript representation for int64_t.
+// TODO(eworoshow): Parameterize the numeric type.
+typedef std::pair<long, long> Coord;
+
 struct Cell {
-  // NB: Should be int64_t but Javascript has no native support for 64-bit integers and so
-  // Emscripten/Embind correspondingly has no Javascript representation for int64_t.
-  // TODO(eworoshow): Templatize the numeric type.
   long x;
   long y;
 
@@ -43,14 +45,14 @@ class Life {
 public:
   Life() {}
 
-  // Triggers a cell to be added at the specified location.
+  // Triggers a cell to be added at the specified location in the next step.
   void addAt(long x, long y);
 
   // Increments the simulation one step.
   void step();
 
   // Returns a copy of the cells currently alive.
-  const std::vector<Cell> getAlive() const;
+  std::vector<Cell> getAlive() const;
 
 private:
   void updateNeighborCount(std::shared_ptr<Cell> cell, int delta);
