@@ -1,5 +1,5 @@
 const life = (function() {
-  const state = new Module.Life();
+  let state;
 
   return {
     onTemplateChanged: function() {
@@ -19,10 +19,8 @@ const life = (function() {
       for (let i = 0; i < cells.size(); i++) {
         const cell = cells.get(i);
         console.log("Adding at " + cell);
-        state.addAt(cell[0], cell[1]);
       }
-      cells.delete();
-
+      state = new Module.Life(cells);
       for (let i = 0; i < 100; i++) {
         state.step();
       }
@@ -31,6 +29,7 @@ const life = (function() {
         console.log("Alive at " + alive.get(i));
       }
       alive.delete();
+      cells.delete();
 
       const fadeMs = 150;
       $("#start-panel").fadeOut(fadeMs, function() {

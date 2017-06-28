@@ -10,7 +10,7 @@ add_library(life_lib life.cc)
 add_custom_target(js)
 add_custom_command(
   TARGET js POST_BUILD
-  COMMAND emcc --bind -s NO_EXIT_RUNTIME=1 life.cc life_js_bindings.cc -o life_js_bindings.js
+  COMMAND emcc -O3 --memory-init-file 0 --bind -s NO_EXIT_RUNTIME=1 life.cc life_js_bindings.cc -o life_js_bindings.js
 )
 
 # Tests.

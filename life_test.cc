@@ -22,21 +22,14 @@ TEST(ParseCellList, ValidInput) {
   EXPECT_THAT(parseCellList("(-4, 4)\n(a, b)\n( 5, -5 )\n"), ElementsAre(Cell(-4, 4), Cell(5, -5)));
 }
 
-TEST(AddAt, Idempotent) {
-  Life life;
-  life.addAt(1, 1);
-  life.addAt(1, 1);
-  life.addAt(-1, 2);
+TEST(Constructor, Idempotent) {
+  Life life({Cell(1, 1), Cell(1, 1), Cell(-1, 2)});
   life.step();
   EXPECT_THAT(life.getAlive(), UnorderedElementsAre(Cell(1, 1), Cell(-1, 2)));
 }
 
 TEST(Step, StaticPattern) {
-  Life life;
-  life.addAt(0, 1);
-  life.addAt(1, 1);
-  life.addAt(0, 0);
-  life.addAt(1, 0);
+  Life life({Cell(0, 1), Cell(1, 1), Cell(0, 0), Cell(1, 0)});
   for (int i = 0; i < 100; i++) {
     life.step();
   }
@@ -44,10 +37,7 @@ TEST(Step, StaticPattern) {
 }
 
 TEST(Step, OscillatingPattern) {
-  Life life;
-  life.addAt(1, 2);
-  life.addAt(1, 1);
-  life.addAt(1, 0);
+  Life life({Cell(1, 2), Cell(1, 1), Cell(1, 0)});
   for (int i = 0; i < 100; i++) {
     life.step();
     EXPECT_THAT(life.getAlive(), UnorderedElementsAre(Cell(1, 2), Cell(1, 1), Cell(1, 0)));
@@ -57,12 +47,7 @@ TEST(Step, OscillatingPattern) {
 }
 
 TEST(Step, TranslatePattern) {
-  Life life;
-  life.addAt(0, 2);
-  life.addAt(1, 1);
-  life.addAt(2, 1);
-  life.addAt(0, 0);
-  life.addAt(1, 0);
+  Life life({Cell(0, 2), Cell(1, 1), Cell(2, 1), Cell(0, 0), Cell(1, 0)});
   for (int i = 0; i < 100; i++) {
     life.step();
     EXPECT_THAT(
@@ -84,29 +69,18 @@ TEST(Step, TranslatePattern) {
 }
 
 TEST(Step, DisappearingPattern) {
-  Life life;
-  life.addAt(6, 2);
-  life.addAt(0, 1);
-  life.addAt(1, 1);
-  life.addAt(1, 0);
-  life.addAt(5, 0);
-  life.addAt(6, 0);
-  life.addAt(7, 0);
-  for (int i = 0; i <= 130; i++) { // Diehard lives for 130 generations.
+  Life life({Cell(6, 2), Cell(0, 1), Cell(1, 1), Cell(1, 0), Cell(5, 0), Cell(6, 0), Cell(7, 0)});
+  for (int i = 0; i <= 500; i++) { // Diehard lives for 130 generations.
     life.step();
   }
-  EXPECT_TRUE(life.getAlive().empty());
+  EXPECT_EQ(0, life.getAlive().size());
 }
 
 TEST(Step, NumericLimits) {
   long min = std::numeric_limits<long>::min();
   long max = std::numeric_limits<long>::max();
 
-  Life life;
-  life.addAt(max, max);
-  life.addAt(min, max);
-  life.addAt(max, min);
-  life.addAt(min, min);
+  Life life({Cell(max, max), Cell(min, max), Cell(max, min), Cell(min, min)});
   for (int i = 0; i < 100; i++) {
     life.step();
   }
