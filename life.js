@@ -49,7 +49,7 @@ const life = (function() {
   }
 
   function drawGrid() {
-    gfx.fillStyle = "#fefefe";
+    gfx.fillStyle = "#fff";
     gfx.fillRect(0, 0, gfx.canvas.width, gfx.canvas.height);
 
     drawGridLines();

@@ -19,14 +19,16 @@
     <label for="cells-in">Initial state as (x, y), one per line<label>
     <textarea id="cells-in">(1, 1)</textarea>
 
-    <label for="template-in">Templates</label>
-    <select id="template-in" onchange="life.onTemplateChanged()">
-      <option><!--Default clear option--></option>
-      <option>Glider</option>
-      <option>Static Box</option>
-      <option>Blinker</option>
-      <option>Diehard</option>
-    <select>
+    <div class="ui-field-contain">
+      <label for="template-in">Templates</label>
+      <select id="template-in" onchange="life.onTemplateChanged()">
+        <option><!--Default clear option--></option>
+        <option>Glider</option>
+        <option>Static Box</option>
+        <option>Blinker</option>
+        <option>Diehard</option>
+      <select>
+    </div>
 
     <button id="start" onclick="life.onStartClicked()">Let there be life!</button>
   </div>
