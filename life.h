@@ -24,6 +24,7 @@ struct CellHash {
 
 class Life {
 public:
+  // Starts a new simulation with the specified cells starting as alive.
   Life(std::vector<Cell> initialState);
 
   // Increments the simulation one step.

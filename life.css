@@ -9,22 +9,8 @@ body {
 }
 
 #cells-in {
-  display: block;
-  font-size: 1em;
-  width: 100%;
-  height: 10em;
-  margin-bottom: 1em;
-}
-
-#template-in {
-  display: block;
-  width: 100%;
-  margin-bottom: 2em;
-  font-size: 1em;
-}
-
-#start {
-  font-size: 1em;
+  height: 11em !important;
+  overflow: auto !important;
 }
 
 #life-panel {
@@ -36,6 +22,4 @@ body {
 #grid {
   border: 1px solid #eee;
   box-shadow: 1px 1px 1px #aaa;
-  width: 400px;
-  height: 400px;
 }

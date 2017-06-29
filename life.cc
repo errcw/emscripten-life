@@ -70,7 +70,7 @@ void Life::updateNeighborCount(Cell cell, int delta) {
 }
 
 std::vector<Cell> Life::getAlive() const {
-  // TODO(eworoshow): Copying the data is not ideal, but there is currently no good mechanism in
+  // Copying the data is not ideal, but there is currently no good mechanism in
   // Emscripten to expose a const iterator or unordered_set to Javascript.
   std::vector<Cell> cells;
   cells.reserve(alive.size());

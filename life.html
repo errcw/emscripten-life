@@ -5,10 +5,10 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="life.css" />
 
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
   <script src="life_js_bindings.js"></script>
   <script src="life.js"></script>
 </head>
@@ -16,8 +16,8 @@
   <div id="start-panel">
     <h1>Life</h1>
 
-    <label for="cells-in">Initial state as (x,y), one per line<label>
-    <textarea id="cells-in">(0, 0)</textarea>
+    <label for="cells-in">Initial state as (x, y), one per line<label>
+    <textarea id="cells-in">(1, 1)</textarea>
 
     <label for="template-in">Templates</label>
     <select id="template-in" onchange="life.onTemplateChanged()">
@@ -25,6 +25,7 @@
       <option>Glider</option>
       <option>Static Box</option>
       <option>Blinker</option>
+      <option>Diehard</option>
     <select>
 
     <button id="start" onclick="life.onStartClicked()">Let there be life!</button>
@@ -34,12 +35,24 @@
     <canvas
       id="grid"
       onmousedown="life.gridMouseDown(event)"
-      onmousemove="life.gridMouseMove(event)">
+      onmousemove="life.gridMouseMove(event)"
+      onmouseup="life.gridMouseUp(event)">
     </canvas>
 
-    <!--
-    TODO(eworoshow): coords, zoom, step/run
-    -->
+    <div class="ui-field-contain">
+      <label for="base-x">X</label>
+      <input type="number" id="base-x" oninput="life.onBaseChanged()" value="-10"/>
+    </div>
+    <div class="ui-field-contain">
+      <label for="base-y">Y</label>
+      <input type="number" id="base-y" oninput="life.onBaseChanged()" value="-10"/>
+    </div>
+    <div class="ui-field-contain">
+      <label for="zoom">Zoom</label>
+      <input type="range" id="zoom" min="1" max="5" value="2" onchange="life.onZoomChanged()"/>
+    </div>
+
+    <button id="step" onclick="life.onStepClicked()">Step</button>
   </div>
 </body>
 </html>
